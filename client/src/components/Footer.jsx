@@ -1,6 +1,29 @@
 import { assets } from "../assets/assets";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    // Simulate subscription logic
+    setSuccess("Thank you for subscribing!");
+    setEmail("");
+  };
+
   return (
     <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-8 w-full text-gray-500 mt-20">
       <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 pb-6">
@@ -17,16 +40,16 @@ export default function Footer() {
             <h2 className="font-semibold mb-5 text-gray-800">Company</h2>
             <ul className="text-sm space-y-2">
               <li>
-                <a href="#">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <a href="#">About us</a>
+                <Link to="/about">About us</Link>
               </li>
               <li>
-                <a href="#">Contact us</a>
+                <Link to="/contact">Contact us</Link>
               </li>
               <li>
-                <a href="#">Privacy policy</a>
+                <Link to="/privacy">Privacy policy</Link>
               </li>
             </ul>
           </div>
@@ -39,16 +62,34 @@ export default function Footer() {
                 The latest news, articles, and resources, sent to your inbox
                 weekly.
               </p>
-              <div className="flex items-center gap-2 pt-4">
+              <form
+                onSubmit={handleSubscribe}
+                className="flex items-center gap-2 pt-4"
+                noValidate
+              >
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address
+                </label>
                 <input
-                  className="border border-gray-500/30 placeholder-gray-500 focus:ring-2 ring-indigo-600 outline-none w-full max-w-64 h-9 rounded px-2"
+                  id="newsletter-email"
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="border border-gray-300 rounded px-3 py-2"
                 />
-                <button className="bg-primary w-24 h-9 text-white rounded cursor-pointer">
+                <button
+                  type="submit"
+                  className="bg-primary w-24 h-9 text-white rounded cursor-pointer hover:bg-primary/90 transition-colors"
+                >
                   Subscribe
                 </button>
-              </div>
+              </form>
+              {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
+              {success && (
+                <p className="text-green-600 text-xs mt-2">{success}</p>
+              )}
             </div>
           </div>
         </div>

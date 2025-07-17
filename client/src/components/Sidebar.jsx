@@ -27,20 +27,35 @@ const navItems = [
 const Sidebar = ({ sidebar, setSidebar }) => {
   const { user } = useUser();
   const { signOut, openUserProfile } = useClerk();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <div
+      role="navigation"
+      aria-label="Main navigation"
       className={`w-60 bg-white border-r border-gray-200 flex flex-col justify-between items-center max-sm:absolute top-14 bottom-0 ${
         sidebar ? "translate-x-0" : "max-sm:-translate-x-full"
       } transition-all duration-300 ease-in-out`}
     >
       <div className="my-7 w-full">
-        <img
-          src={user.imageUrl}
-          alt="User Avatar"
-          className="size-13 rounded-full mx-auto cursor-pointer object-cover"
-          onClick={() => openUserProfile()}
-        />
-        <h1 className="mt-1 text-center">{user.fullName}</h1>
+        {user?.imageUrl && (
+          <img
+            src={user.imageUrl}
+            alt={`${user.fullName || "User"}'s profile picture`}
+            className="w-16 h-16 rounded-full mx-auto cursor-pointer object-cover"
+            onClick={() => openUserProfile()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                openUserProfile();
+              }
+            }}
+            tabIndex={0}
+          />
+        )}
+        <h1 className="mt-1 text-center">{user?.fullName}</h1>
         <div className="px-6 mt-5 text-sm text-gray-600 font-medium">
           {navItems.map((item) => (
             <NavLink
@@ -68,13 +83,15 @@ const Sidebar = ({ sidebar, setSidebar }) => {
           onClick={() => openUserProfile()}
           className="flex gap-2 items-center cursor-pointer"
         >
-          <img
-            src={user.imageUrl}
-            className="size-8 rounded-full object-cover"
-            alt="User Avatar"
-          />
+          {user?.imageUrl && (
+            <img
+              src={user.imageUrl}
+              className="size-8 rounded-full object-cover"
+              alt="User Avatar"
+            />
+          )}
           <div>
-            <h1 className="text-sm font-medium">{user.fullName}</h1>
+            <h1 className="text-sm font-medium">{user?.fullName}</h1>
             <p className="text-xs text-gray-500">
               <Protect plan="premium_user" fallback="Free">
                 Premium
