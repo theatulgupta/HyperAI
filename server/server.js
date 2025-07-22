@@ -5,23 +5,23 @@ import { clerkMiddleware, requireAuth } from "@clerk/express";
 import aiRouter from "./routes/ai.route.js";
 import { env } from "./configs/env.config.js";
 import morgan from "morgan";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
 
-// Middlewares
-app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(clerkMiddleware());
 app.use(morgan("dev"));
 
-// Public Route
 app.get("/", (req, res) => {
   res.send("Hello from Server!");
 });
 
-// API Routes (Protected)
 app.use("/api/ai", requireAuth(), aiRouter);
+
+// 🔒 Global error handler
+app.use(errorHandler);
 
 app.listen(env.PORT || 3000, () => {
   console.log(`Server is running on port ${env.PORT}`);

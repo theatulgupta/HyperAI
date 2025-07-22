@@ -2,7 +2,7 @@ import { getFreeUsage, incrementFreeUsage } from "../daos/user.dao.js";
 
 export const checkUserAccessService = async (req) => {
   const { userId, has } = await req.auth();
-  const hasPremiumPlan = await has("premium");
+  const hasPremiumPlan = await has({ plan: "premium" });
 
   if (!userId) {
     throw { status: 401, message: "Unauthorized" };
