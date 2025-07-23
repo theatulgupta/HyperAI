@@ -6,6 +6,7 @@ import aiRouter from "./routes/ai.route.js";
 import { env } from "./configs/env.config.js";
 import morgan from "morgan";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import userRouter from "./routes/user.route.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/ai", requireAuth(), aiRouter);
+app.use("/api/user", requireAuth(), userRouter);
 
 // 🔒 Global error handler
 app.use(errorHandler);
