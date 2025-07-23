@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { dummyCreationData } from "../assets/assets.js";
 import { GemIcon, Sparkles } from "lucide-react";
 import { Protect } from "@clerk/clerk-react";

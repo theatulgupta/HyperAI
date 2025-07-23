@@ -8,7 +8,7 @@ import {
   removeImageObject,
   reviewResume,
 } from "../controllers/ai.controller.js";
-import { upload } from "../configs/multer.config.js";
+import upload from "../configs/multer.config.js";
 
 const aiRouter = Router();
 
