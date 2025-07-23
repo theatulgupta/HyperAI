@@ -1,10 +1,9 @@
 import asyncHandler from "express-async-handler";
-
 import {
   getCreationsService,
   getPublishedCreationsService,
   toggleLikeCreationService,
-} from "../services/user.service";
+} from "../services/user.service.js";
 
 export const getUserCreations = asyncHandler(async (req, res) => {
   const { userId } = req;
