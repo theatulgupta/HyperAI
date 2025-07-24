@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Hash, Image, Sparkles } from "lucide-react";
+import { Image, Sparkles, Loader2 } from "lucide-react";
+import { useGenerateImage } from "../hooks/useGenerateImages";
 
 const GenerateImages = () => {
   const imageStyles = [
@@ -17,8 +18,17 @@ const GenerateImages = () => {
   const [input, setInput] = useState("");
   const [publish, setPublish] = useState(false);
 
+  const { generateImage, isLoading, image, setGeneratedImage } =
+    useGenerateImage();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setGeneratedImage(null);
+    generateImage({ prompt: input, style: selectedStyle, publish });
+    setInput("");
+    setSelectedStyle(imageStyles[0]);
+    setPublish(false);
   };
 
   return (
@@ -35,6 +45,11 @@ const GenerateImages = () => {
         <p className="mt-6 text-sm font-medium">Describe Your Image</p>
         <textarea
           onChange={(e) => setInput(e.target.value)}
+          onPaste={(e) => {
+            e.preventDefault();
+            const paste = e.clipboardData.getData("text");
+            setInput(paste);
+          }}
           value={input}
           rows={4}
           className="w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300"
@@ -72,9 +87,22 @@ const GenerateImages = () => {
           <p className="text-sm">Make this image Public</p>
         </div>
 
-        <button className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00AD25] to-[#04FF50] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer">
-          <Hash className="size-4" />
-          Generate Image
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00AD25] to-[#04FF50] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="animate-spin size-4" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Image className="size-4" />
+              Generate Image
+            </>
+          )}
         </button>
       </form>
 
@@ -84,14 +112,21 @@ const GenerateImages = () => {
           <Image className="size-6 text-[#00AD25]" />
           <h1 className="text-xl font-semibold">Generated Image</h1>
         </div>
-        <div className="flex-1 flex justify-center items-center">
-          <div className="text-sm flex flex-col items-center gap-5 text-gray-400">
-            <Image className="size-9" />
-            <p>
-              Describe your image and click "Generate Image" to get started.
-            </p>
+
+        {image ? (
+          <div className="mt-3 h-full">
+            <img src={image} alt="image" className="size-full" />
           </div>
-        </div>
+        ) : (
+          <div className="flex-1 flex justify-center items-center">
+            <div className="text-sm flex flex-col items-center gap-5 text-gray-400">
+              <Image className="size-9" />
+              <p>
+                Describe your image and click "Generate Image" to get started.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

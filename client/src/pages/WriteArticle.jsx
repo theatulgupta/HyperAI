@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Edit, Sparkles, Loader2 } from "lucide-react";
+import { Edit, Sparkles, Loader2, Image } from "lucide-react";
 import { useWriteArticle } from "../hooks/useWriteArticle";
 import Markdown from "react-markdown";
 
@@ -13,19 +13,15 @@ const WriteArticle = () => {
   const [selectedLength, setSelectedLength] = useState(articleLength[0]);
   const [input, setInput] = useState("");
 
-  const {
-    generateArticle,
-    isLoading,
-    isError,
-    error,
-    content,
-    setGeneratedArticle,
-  } = useWriteArticle();
+  const { generateArticle, isLoading, content, setGeneratedArticle } =
+    useWriteArticle();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setGeneratedArticle(null);
     generateArticle({ prompt: input, length: selectedLength.length });
+    setInput("");
+    setSelectedLength(articleLength[0]);
   };
 
   return (
@@ -42,6 +38,10 @@ const WriteArticle = () => {
         <p className="mt-6 text-sm font-medium">Article Topic</p>
         <input
           onChange={(e) => setInput(e.target.value)}
+          onPaste={(e) => {
+            const pasted = e.clipboardData.getData("text");
+            setInput(pasted);
+          }}
           value={input}
           className="w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300"
           type="text"
@@ -83,10 +83,6 @@ const WriteArticle = () => {
             </>
           )}
         </button>
-
-        {isError && (
-          <p className="text-red-500 mt-2 text-sm">{error.message}</p>
-        )}
       </form>
 
       {/* Right Column */}
@@ -95,18 +91,21 @@ const WriteArticle = () => {
           <Edit className="size-6 text-[#4A7AFF]" />
           <h1 className="text-xl font-semibold">Generated Article</h1>
         </div>
-        <div className="flex-1 p-4 overflow-auto flex flex-col justify-center items-center">
-          {content ? (
-            <p className="pt-15 text-sm whitespace-pre-line">
+
+        {content ? (
+          <div className="mt-3 h-full overflow-y-scroll text-sm text-slate-600">
+            <div className="reset-tw">
               <Markdown>{content}</Markdown>
-            </p>
-          ) : (
+            </div>
+          </div>
+        ) : (
+          <div className="flex-1 flex justify-center items-center">
             <div className="text-sm flex flex-col items-center gap-5 text-gray-400">
               <Edit className="size-9" />
               <p>Enter a topic and click "Generate Article" to get started.</p>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
