@@ -3,7 +3,6 @@ import "dotenv/config";
 import cors from "cors";
 import { clerkMiddleware, requireAuth } from "@clerk/express";
 import aiRouter from "./routes/ai.route.js";
-import { env } from "./configs/env.config.js";
 import morgan from "morgan";
 import userRouter from "./routes/user.route.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
@@ -24,9 +23,5 @@ app.use("/api/user", requireAuth(), userRouter);
 
 // Global Error Handler
 app.use(errorHandler);
-
-app.listen(env.PORT || 3000, () => {
-  console.log(`Server is running on port ${env.PORT}`);
-});
 
 export default app;
