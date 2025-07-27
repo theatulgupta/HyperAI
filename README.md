@@ -18,9 +18,9 @@ HyperAI is a modern AI SaaS platform that bundles multiple powerful tools into a
 
 ## 🧱 Tech Stack
 
-| Frontend         | Backend    | Database          | Auth  | State & Routing               |
-| ---------------- | ---------- | ----------------- | ----- | ----------------------------- |
-| React + Tailwind | Express.js | PostgreSQL (Neon) | Clerk | TanStack Query + React Router |
+| Frontend         | Backend    | Database          | Auth + Payment | State & Routing               |
+| ---------------- | ---------- | ----------------- | -------------- | ----------------------------- |
+| React + Tailwind | Express.js | PostgreSQL (Neon) | Clerk          | TanStack Query + React Router |
 
 ---
 
@@ -39,7 +39,7 @@ npm run dev
 
 - All backend APIs are secured using Clerk JWT middleware.
 - TanStack Query handles API caching and mutation.
-- TanStack Router provides seamless navigation and data fetching integration.
+- React Router provides seamless navigation and data fetching integration.
 
 ---
 
