@@ -10,19 +10,33 @@ import fs from "fs";
 import pdf from "pdf-parse/lib/pdf-parse.js";
 
 export const generateArticleService = async ({ userId, prompt, length }) => {
+  const originalPrompt = prompt;
+  prompt = `Write a detailed, well-structured, and SEO-friendly article about "${prompt}" with approximately ${length} words. Make it informative and engaging for a general audience.`;
+
   const response = await createGeminiChatCompletion({
     prompt,
     temperature: 0.7,
-    max_tokens: length || 300,
+    max_tokens: length,
   });
 
   const content = response.choices?.[0]?.message?.content;
 
-  await saveCreation(userId, prompt, content, "article");
+  await saveCreation(
+    userId,
+    `Write an article about ${originalPrompt}`,
+    content,
+    "article"
+  );
   return content;
 };
 
-export const generateBlogTitleService = async ({ userId, prompt }) => {
+export const generateBlogTitleService = async ({
+  userId,
+  keyword,
+  category,
+}) => {
+  const prompt = `You are a professional blog content strategist. Generate 10 **bold**, engaging, SEO-optimized blog titles based on the keyword "${keyword}" in the "${category}" category. Titles should be unique, creative, and click-worthy. Format the response as a numbered list (1–5), with each title in **bold**, followed by a short 1-line normal text description that explains the blog post's value or angle. Keep the entire response under 120 words.`;
+
   const response = await createGeminiChatCompletion({
     prompt,
     temperature: 0.7,
@@ -30,9 +44,13 @@ export const generateBlogTitleService = async ({ userId, prompt }) => {
   });
 
   const content = response.choices?.[0]?.message?.content;
-  if (!content) throw new Error("AI did not return a valid response.");
 
-  await saveCreation(userId, prompt, content, "blog-title");
+  await saveCreation(
+    userId,
+    `Generate blog-titles for ${keyword} in the ${category} category.`,
+    content,
+    "blog-title"
+  );
   return content;
 };
 
@@ -79,6 +97,14 @@ export const reviewResumeService = async ({ userId, resume }) => {
 
   const content = response.choices?.[0]?.message?.content;
 
-  await saveCreation(userId, prompt, content, "resume-review");
+  await saveCreation(
+    userId,
+    "Review the uploaded resume",
+    content,
+    "resume-review",
+    {
+      isResume: true,
+    }
+  );
   return content;
 };

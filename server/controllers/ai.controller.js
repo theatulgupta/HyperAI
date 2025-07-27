@@ -28,7 +28,7 @@ export const generateArticle = asyncHandler(async (req, res) => {
 
 export const generateBlogTitle = asyncHandler(async (req, res) => {
   const { userId, plan } = req;
-  const { prompt } = req.body;
+  const { keyword, category } = req.body;
   const isPremium = plan === "premium";
 
   const free_usage = await getFreeUsage(userId);
@@ -39,7 +39,7 @@ export const generateBlogTitle = asyncHandler(async (req, res) => {
       error: "Free usage limit reached. Upgrade to premium to continue.",
     });
 
-  const content = await generateBlogTitleService({ userId, prompt, isPremium });
+  const content = await generateBlogTitleService({ userId, keyword, category });
   await incrementFreeUsage(userId, free_usage);
   res.status(200).json({ success: true, content });
 });
@@ -48,6 +48,8 @@ export const generateImage = asyncHandler(async (req, res) => {
   const { userId, plan } = req;
   const { prompt, publish } = req.body;
   const isPremium = plan === "premium";
+
+  console.log("generating");
 
   if (!isPremium)
     return res.status(400).json({
@@ -59,7 +61,6 @@ export const generateImage = asyncHandler(async (req, res) => {
     userId,
     prompt,
     publish,
-    isPremium,
   });
   res.status(200).json({ success: true, secure_url });
 });

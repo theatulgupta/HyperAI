@@ -8,7 +8,7 @@ import {
 export const getUserCreations = asyncHandler(async (req, res) => {
   const { userId } = req;
 
-  const creations = await getCreationsService({ userId });
+  const creations = await getCreationsService(userId);
 
   res.status(200).json({ success: true, creations });
 });

@@ -1,18 +1,16 @@
-import  { useEffect, useState } from "react";
-import { dummyCreationData } from "../assets/assets.js";
-import { GemIcon, Sparkles } from "lucide-react";
+import { useEffect } from "react";
+import { GemIcon, Sparkles, Loader2, RotateCw } from "lucide-react";
 import { Protect } from "@clerk/clerk-react";
 import CreationItem from "../components/CreationItem.jsx";
-const Dashboard = () => {
-  const [creations, setCreations] = useState([]);
+import { useDashboard } from "../hooks/useDashboard.js";
 
-  const getDashboardData = async () => {
-    setCreations(dummyCreationData);
-  };
+const Dashboard = () => {
+  const { creations, isLoading, refetchCreations } = useDashboard();
 
   useEffect(() => {
-    getDashboardData();
-  }, []);
+    refetchCreations();
+    console.log(creations);
+  }, [refetchCreations, creations]);
 
   return (
     <div className="h-full overflow-y-scroll p-6">
@@ -45,10 +43,34 @@ const Dashboard = () => {
       </div>
       {/* Recent Creations Card */}
       <div className="space-y-3">
-        <p className="mt-6 mb-4">Recent Creations</p>
-        {creations.map((item) => (
-          <CreationItem key={item.id} item={item} />
-        ))}
+        <div className="flex flex-row justify-between items-center">
+          <p className="mt-6 mb-4">Recent Creations</p>
+          <button
+            onClick={refetchCreations}
+            title="Refresh"
+            className="text-purple-600 hover:text-purple-800 transition-colors bg-gray-200 rounded-full p-2 cursor-pointer hover:bg-gray-300"
+          >
+            {isLoading ? (
+              <div>
+                <Loader2 className="animate-spin size-4" />
+              </div>
+            ) : (
+              <RotateCw className="size-4" />
+            )}
+          </button>
+        </div>
+        {isLoading ? (
+          <div className="size-full flex items-center justify-center text-gray-500">
+            <Loader2 className="animate-spin size-4 mr-1" />
+            Loading Creations...
+          </div>
+        ) : creations.length === 0 ? (
+          <div className="size-full flex items-center justify-center text-gray-500">
+            No creations found.
+          </div>
+        ) : (
+          creations.map((item) => <CreationItem key={item.id} item={item} />)
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-react";
-import { Heart, Loader2, RotateCcw, RotateCw } from "lucide-react";
+import { Heart, Loader2, RotateCw } from "lucide-react";
 import { useCommunity } from "../hooks/useCommunity";
 
 const Community = () => {
@@ -17,7 +17,7 @@ const Community = () => {
         >
           {isLoading ? (
             <div>
-              <Loader2 className="animate-spin size-4 mr-1" />
+              <Loader2 className="animate-spin size-4" />
             </div>
           ) : (
             <RotateCw className="size-4" />
