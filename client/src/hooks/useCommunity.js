@@ -12,7 +12,7 @@ export const useCommunity = () => {
     isError,
     refetch: refetchCreations,
   } = useQuery({
-    queryKey: ["userCreations"],
+    queryKey: ["publishedCreations"],
     queryFn: () => userApiClient.getPublishedCreations(api),
     select: (response) => response.data.creations,
     onError: (err) =>
@@ -22,7 +22,7 @@ export const useCommunity = () => {
   const { mutate: toggleLike, isPending: isTogglingLike } = useMutation({
     mutationFn: ({ id }) => userApiClient.toggleLikeCreation(api, { id }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["userCreations"] });
+      queryClient.invalidateQueries({ queryKey: ["publishedCreations"] });
     },
     onError: (err) => {
       toast.error(err.response?.data?.error || "Failed to toggle like");

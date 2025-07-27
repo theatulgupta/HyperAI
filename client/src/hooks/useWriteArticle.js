@@ -11,10 +11,6 @@ export const useWriteArticle = () => {
 
   const { mutate: generateArticle, isPending } = useMutation({
     mutationFn: ({ prompt, length }) => {
-      if (!prompt || !length) throw new Error("Prompt and length are required");
-
-      prompt = `Write a detailed, well-structured, and SEO-friendly article about "${prompt}" with approximately ${length} words. Make it informative and engaging for a general audience.`;
-
       return aiApiClient.generateArticle(api, { prompt, length });
     },
     onSuccess: (response) => {

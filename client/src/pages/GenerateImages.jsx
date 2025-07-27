@@ -23,8 +23,6 @@ const GenerateImages = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     generateImage({ prompt: input, style: selectedStyle, publish });
-    setSelectedStyle(imageStyles[0]);
-    setPublish(false);
   };
 
   return (
@@ -103,7 +101,7 @@ const GenerateImages = () => {
       </form>
 
       {/* Right Column */}
-      <div className="w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-103">
+      <div className="w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-108">
         <div className="flex items-center gap-3">
           <Image className="size-6 text-[#00AD25]" />
           <h1 className="text-xl font-semibold">Generated Image</h1>
