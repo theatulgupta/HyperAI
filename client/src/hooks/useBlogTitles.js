@@ -32,6 +32,5 @@ export const useBlogTitles = () => {
     generateBlogTitle,
     isLoading: isPending,
     content: generatedTitle,
-    setGeneratedTitle,
   };
 };

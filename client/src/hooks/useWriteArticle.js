@@ -30,6 +30,5 @@ export const useWriteArticle = () => {
     generateArticle,
     isLoading: isPending,
     content: generatedArticle,
-    setGeneratedArticle,
   };
 };

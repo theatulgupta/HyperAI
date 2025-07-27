@@ -18,15 +18,11 @@ const GenerateImages = () => {
   const [input, setInput] = useState("");
   const [publish, setPublish] = useState(false);
 
-  const { generateImage, isLoading, image, setGeneratedImage } =
-    useGenerateImage();
+  const { generateImage, isLoading, image } = useGenerateImage();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setGeneratedImage(null);
     generateImage({ prompt: input, style: selectedStyle, publish });
-    setInput("");
     setSelectedStyle(imageStyles[0]);
     setPublish(false);
   };

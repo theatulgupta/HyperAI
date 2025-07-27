@@ -3,18 +3,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useApiClient, aiApiClient } from "../utils/api.js";
 import toast from "react-hot-toast";
 
-export const useRemoveBackground = () => {
+export const useReviewResume = () => {
   const api = useApiClient();
   const queryClient = useQueryClient();
 
-  const [generatedImage, setGeneratedImage] = useState(null);
+  const [reviewContent, setReviewContent] = useState(null);
 
-  const { mutate: removeImageBackground, isPending } = useMutation({
+  const { mutate: reviewResume, isPending } = useMutation({
     mutationFn: (formData) => {
-      return aiApiClient.removeImageBackground(api, formData);
+      return aiApiClient.reviewResume(api, formData);
     },
     onSuccess: (response) => {
-      setGeneratedImage(response.data.secure_url);
+      setReviewContent(response.data.content);
       queryClient.invalidateQueries({ queryKey: ["userCreations"] });
     },
     onError: (err) => {
@@ -23,8 +23,8 @@ export const useRemoveBackground = () => {
   });
 
   return {
-    removeImageBackground,
+    reviewResume,
     isLoading: isPending,
-    image: generatedImage,
+    content: reviewContent,
   };
 };
