@@ -26,6 +26,5 @@ export const useGenerateImage = () => {
     generateImage,
     isLoading: isPending,
     image: generatedImage,
-    setGeneratedImage,
   };
 };

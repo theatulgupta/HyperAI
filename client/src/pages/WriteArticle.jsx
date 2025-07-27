@@ -13,14 +13,11 @@ const WriteArticle = () => {
   const [selectedLength, setSelectedLength] = useState(articleLength[0]);
   const [input, setInput] = useState("");
 
-  const { generateArticle, isLoading, content, setGeneratedArticle } =
-    useWriteArticle();
+  const { generateArticle, isLoading, content } = useWriteArticle();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setGeneratedArticle(null);
     generateArticle({ prompt: input, length: selectedLength.length });
-    setInput("");
     setSelectedLength(articleLength[0]);
   };
 
@@ -86,7 +83,7 @@ const WriteArticle = () => {
       </form>
 
       {/* Right Column */}
-      <div className="w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-87 max-h-[700px]">
+      <div className="w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-87 max-h-[700px] overflow-y-auto">
         <div className="flex items-center gap-3">
           <Edit className="size-6 text-[#4A7AFF]" />
           <h1 className="text-xl font-semibold">Generated Article</h1>

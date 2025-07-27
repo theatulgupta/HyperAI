@@ -17,14 +17,11 @@ const BlogTitles = () => {
   const [selectedCategory, setSelectedCategory] = useState("General");
   const [input, setInput] = useState("");
 
-  const { generateBlogTitle, isLoading, content, setGeneratedTitle } =
-    useBlogTitles();
+  const { generateBlogTitle, isLoading, content } = useBlogTitles();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setGeneratedTitle(null);
     generateBlogTitle({ keyword: input, category: selectedCategory });
-    setInput("");
     setSelectedCategory(blogCategories[0]);
   };
 

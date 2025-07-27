@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Eraser, Sparkles, Loader2 } from "lucide-react";
 import { useRemoveBackground } from "../hooks/useRemoveBackground";
@@ -6,17 +6,12 @@ import toast from "react-hot-toast";
 
 const RemoveBackground = () => {
   const [selectImage, setSelectImage] = useState(null);
-  const fileInputRef = useRef(null);
 
-  const { removeImageBackground, isLoading, image, setGeneratedImage } =
-    useRemoveBackground();
+  const { removeImageBackground, isLoading, image } = useRemoveBackground();
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       setSelectImage(acceptedFiles[0]);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = null;
-      }
     }
   }, []);
 
@@ -29,7 +24,6 @@ const RemoveBackground = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setGeneratedImage(null);
 
     if (!selectImage) {
       toast.error("Please upload an image first.");
@@ -39,12 +33,6 @@ const RemoveBackground = () => {
     const formData = new FormData();
     formData.append("image", selectImage);
     removeImageBackground(formData);
-
-    setSelectImage(null);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = null;
-    }
   };
 
   return (
@@ -81,7 +69,7 @@ const RemoveBackground = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#F6AB41] to-[#FF4938] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer"
+          className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#F6AB41] to-[#FF4938] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer disabled:opacity-50"
         >
           {isLoading ? (
             <>
@@ -98,7 +86,7 @@ const RemoveBackground = () => {
       </form>
 
       {/* Right Column */}
-      <div className="w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-103">
+      <div className="w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-62">
         <div className="flex items-center gap-3">
           <Eraser className="size-6 text-[#FF4938]" />
           <h1 className="text-xl font-semibold">Processed Image</h1>
@@ -106,7 +94,7 @@ const RemoveBackground = () => {
 
         {image ? (
           <div className="mt-3 h-full">
-            <img src={image} alt="processed" className="size-full" />
+            <img src={image} alt="Processed" className="size-full" />
           </div>
         ) : (
           <div className="flex-1 flex justify-center items-center">
