@@ -1,12 +1,77 @@
-# React + Vite
+# 🚀 HyperAI — AI-Powered Productivity Suite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**HyperAI** is a modern, full-featured AI-powered SaaS web application built with **React + Vite**. It leverages state-of-the-art AI capabilities to assist users with content creation, image editing, and more.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📝 **Write Article** — Generate high-quality articles with AI assistance.
+- 🧠 **Blog Title Generator** — Craft engaging blog titles instantly.
+- 🖼️ **Image Generator** — Create stunning visuals from text prompts.
+- 🎨 **Remove Background** — Cleanly remove image backgrounds.
+- ✂️ **Remove Object** — Erase unwanted objects from images.
+- 📄 **Review Resume** — AI-powered resume feedback and suggestions.
+- 🌐 **Community** — Like and share AI creations with others.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React 19 + Vite
+- **State Management & API**: TanStack Query
+- **Routing**: React Router DOM v7
+- **Authentication**: Clerk
+- **Styling**: TailwindCSS 4
+- **UI Icons**: Lucide React
+- **Drag & Drop**: React Dropzone
+- **Notifications**: React Hot Toast
+- **Markdown Support**: React Markdown
+
+## ⚙️ Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Lint the codebase
+npm run lint
+```
+
+## 📁 Folder Structure
+
+```
+client/
+├── public/
+├── src/
+│   ├── components/
+│   ├── hooks/
+│   ├── pages/
+│   ├── routes/
+│   ├── utils/
+│   └── App.jsx
+└── tailwind.config.js
+```
+
+## 📦 Dependencies
+
+See `package.json` for full dependency list.
+
+## 🧪 Development Notes
+
+- Uses `@vitejs/plugin-react-swc` for blazing-fast HMR.
+- Includes ESLint configuration with React hooks and TanStack plugin support.
+- Uses `serverless` architecture for deploying Express backend on Vercel.
+
+## 🚀 Deployment
+
+Frontend is deployable via **Vercel** or **Netlify**.
+
+---
+
+Made with 💡 by [TheAtulGupta](https://github.com/theatulgupta)
