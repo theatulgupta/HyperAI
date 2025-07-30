@@ -72,9 +72,7 @@ const ReviewResume = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className={`w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00DA83] to-[#009BB3] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer ${
-            isLoading || !selectResume ? "opacity-70 cursor-not-allowed" : ""
-          }`}
+          className={`w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00DA83] to-[#009BB3] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer`}
         >
           {isLoading ? (
             <>
