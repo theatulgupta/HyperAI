@@ -17,16 +17,16 @@ aiRouter.post("/generate-blog-title", auth, generateBlogTitle);
 aiRouter.post("/generate-image", auth, generateImage);
 aiRouter.post(
   "/remove-image-background",
-  upload.single("image"),
   auth,
-  removeImageBackground
+  upload.single("image"),
+  removeImageBackground,
 );
 aiRouter.post(
   "/remove-image-object",
-  upload.single("image"),
   auth,
-  removeImageObject
+  upload.single("image"),
+  removeImageObject,
 );
-aiRouter.post("/review-resume", upload.single("resume"), auth, reviewResume);
+aiRouter.post("/review-resume", auth, upload.single("resume"), reviewResume);
 
 export default aiRouter;

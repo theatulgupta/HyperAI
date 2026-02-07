@@ -1,4 +1,3 @@
-import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -28,7 +27,12 @@ export default function Footer() {
     <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-8 w-full text-gray-500 mt-20">
       <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 pb-6">
         <div className="md:max-w-96">
-          <img className="h-9" src={assets.logo} alt="logo" />
+          <div
+            className="text-2xl font-bold tracking-tight text-slate-800"
+            aria-label="Hyper.ai"
+          >
+            Hyper<span className="text-primary">.ai</span>
+          </div>
           <p className="mt-6 text-sm">
             Experience the power of AI with HyperAI. <br />
             Transform your content creation with our suite of premium AI tools.

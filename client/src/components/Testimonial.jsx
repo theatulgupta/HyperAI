@@ -12,11 +12,11 @@ const Testimonial = () => {
           Don't just take our word for it. Here's what our users are saying.
         </p>
       </div>
-      <div className="flex flex-wrap mt-10 justify-center">
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
-            className="p-8 m-4 max-w-xs rounded-lg bg-[#FDFDFE] shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300 cursor-pointer"
+            className="h-full rounded-2xl border border-slate-200/70 bg-white/80 p-7 shadow-sm backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
           >
             <div
               className="flex items-center gap-1"
@@ -38,7 +38,7 @@ const Testimonial = () => {
                   />
                 ))}
             </div>
-            <p className="text-gray-500 text-sm my-5">
+            <p className="text-slate-500 text-sm my-5">
               "{testimonial.content}"
             </p>
             <hr className="mb-5 border-gray-300" />

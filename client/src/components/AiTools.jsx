@@ -18,23 +18,23 @@ const AiTools = () => {
           cutting-edge AI technology.
         </p>
       </div>
-      <div className="flex flex-wrap mt-10 justify-between">
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {AiToolsData.map((tool, idx) => (
           <div
             key={idx}
-            className="p-8 m-4 max-w-xs rounded-lg bg-[#FDFDFE] shadow-lg border border-gray-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+            className="group h-full rounded-2xl border border-slate-200/70 bg-white/80 p-7 shadow-sm backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer"
             onClick={() => (user ? navigate(tool.path) : openSignIn())}
           >
             <tool.Icon
-              className="size-12 p-3 text-white rounded-xl"
+              className="size-12 p-3 text-white rounded-2xl"
               style={{
                 background: `linear-gradient(to bottom, ${tool.bg.from}, ${tool.bg.to})`,
               }}
             />
-            <h3 className="mt-6 mb-3 text-lg font-semibold">{tool.title}</h3>
-            <p className="text-gray-400 text-sm max-w-[95%]">
-              {tool.description}
-            </p>
+            <h3 className="mt-6 mb-3 text-lg font-semibold text-slate-800">
+              {tool.title}
+            </h3>
+            <p className="text-slate-500 text-sm">{tool.description}</p>
           </div>
         ))}
       </div>

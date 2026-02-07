@@ -1,5 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useApiClient, userApiClient } from "../utils/api.js";
+import {
+  useApiClient,
+  userApiClient,
+  getApiErrorMessage,
+} from "../utils/api.js";
 import toast from "react-hot-toast";
 
 export const useCommunity = () => {
@@ -16,7 +20,7 @@ export const useCommunity = () => {
     queryFn: () => userApiClient.getPublishedCreations(api),
     select: (response) => response.data.creations,
     onError: (err) =>
-      toast.error(err.response?.data?.error || "Failed to fetch creations"),
+      toast.error(getApiErrorMessage(err, "Failed to fetch creations")),
   });
 
   const { mutate: toggleLike, isPending: isTogglingLike } = useMutation({
@@ -25,7 +29,7 @@ export const useCommunity = () => {
       queryClient.invalidateQueries({ queryKey: ["publishedCreations"] });
     },
     onError: (err) => {
-      toast.error(err.response?.data?.error || "Failed to toggle like");
+      toast.error(getApiErrorMessage(err, "Failed to toggle like"));
     },
   });
 

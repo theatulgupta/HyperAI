@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useApiClient, aiApiClient } from "../utils/api.js";
+import { useApiClient, aiApiClient, getApiErrorMessage } from "../utils/api.js";
 import toast from "react-hot-toast";
 
 export const useRemoveObject = () => {
@@ -18,7 +18,7 @@ export const useRemoveObject = () => {
       queryClient.invalidateQueries({ queryKey: ["userCreations"] });
     },
     onError: (err) => {
-      toast.error(err.response.data.error);
+      toast.error(getApiErrorMessage(err, "Failed to remove object"));
     },
   });
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Edit, Hash, Sparkles, Loader2 } from "lucide-react";
 import { useBlogTitles } from "../hooks/useBlogTitles";
+import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 
 const BlogTitles = () => {
@@ -21,7 +22,14 @@ const BlogTitles = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    generateBlogTitle({ keyword: input, category: selectedCategory });
+    if (!input.trim()) {
+      toast.error("Please enter a keyword.");
+      return;
+    }
+    generateBlogTitle({
+      keyword: input.trim(),
+      category: selectedCategory,
+    });
     setSelectedCategory(blogCategories[0]);
   };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Image, Sparkles, Loader2 } from "lucide-react";
 import { useGenerateImage } from "../hooks/useGenerateImages";
+import toast from "react-hot-toast";
 
 const GenerateImages = () => {
   const imageStyles = [
@@ -22,7 +23,15 @@ const GenerateImages = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    generateImage({ prompt: input, style: selectedStyle, publish });
+    if (!input.trim()) {
+      toast.error("Please describe your image.");
+      return;
+    }
+    generateImage({
+      prompt: input.trim(),
+      style: selectedStyle,
+      publish,
+    });
   };
 
   return (

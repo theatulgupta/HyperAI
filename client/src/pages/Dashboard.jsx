@@ -9,14 +9,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     refetchCreations();
-    console.log(creations);
-  }, [refetchCreations, creations]);
+  }, [refetchCreations]);
 
   return (
     <div className="h-full overflow-y-scroll p-6">
-      <div className="flex justify-start gap-4 flex-wrap">
+      <div className="grid gap-4 sm:grid-cols-2">
         {/* Total Creations Card */}
-        <div className="flex justify-between items-center w-72 p-4 px-6 bg-white rounded-xl border border-gray-200">
+        <div className="flex justify-between items-center p-4 px-6 bg-white/80 rounded-2xl border border-slate-200/70 shadow-sm backdrop-blur">
           <div className="text-slate-600">
             <p className="text-sm">Total Creations</p>
             <h2 className="text-xl font-semibold">{creations.length}</h2>
@@ -27,7 +26,7 @@ const Dashboard = () => {
         </div>
 
         {/* Active Plan Card */}
-        <div className="flex justify-between items-center w-72 p-4 px-6 bg-white rounded-xl border border-gray-200">
+        <div className="flex justify-between items-center p-4 px-6 bg-white/80 rounded-2xl border border-slate-200/70 shadow-sm backdrop-blur">
           <div className="text-slate-600">
             <p className="text-sm">Active Plan</p>
             <h2 className="text-xl font-semibold">

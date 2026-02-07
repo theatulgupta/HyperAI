@@ -1,10 +1,23 @@
 import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+
+export const getApiErrorMessage = (error, fallback) => {
+  return (
+    error?.response?.data?.error ||
+    error?.response?.data?.message ||
+    error?.message ||
+    fallback
+  );
+};
 
 const createApiClient = (getToken) => {
-  const api = axios.create({ baseURL: API_BASE_URL });
+  const api = axios.create({
+    baseURL: API_BASE_URL,
+    timeout: 30000,
+  });
 
   api.interceptors.request.use(async (config) => {
     const token = await getToken();

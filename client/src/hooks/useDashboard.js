@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useApiClient, userApiClient } from "../utils/api";
+import { useApiClient, userApiClient, getApiErrorMessage } from "../utils/api";
 import toast from "react-hot-toast";
 
 export const useDashboard = () => {
@@ -14,7 +14,7 @@ export const useDashboard = () => {
     queryFn: () => userApiClient.getUserCreations(api),
     select: (response) => response.data.creations,
     onError: (err) =>
-      toast.error(err.response?.data?.error || "Failed to fetch creations"),
+      toast.error(getApiErrorMessage(err, "Failed to fetch creations")),
   });
 
   return {

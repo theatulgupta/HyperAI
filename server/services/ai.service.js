@@ -25,7 +25,7 @@ export const generateArticleService = async ({ userId, prompt, length }) => {
     userId,
     `Write an article about ${originalPrompt}`,
     content,
-    "article"
+    "article",
   );
   return content;
 };
@@ -49,7 +49,7 @@ export const generateBlogTitleService = async ({
     userId,
     `Generate blog-titles for ${keyword} in the ${category} category.`,
     content,
-    "blog-title"
+    "blog-title",
   );
   return content;
 };
@@ -62,49 +62,67 @@ export const generateImageService = async ({ userId, prompt, publish }) => {
 };
 
 export const removeImageBackgroundService = async ({ userId, image }) => {
-  const secure_url = await uploadImageRemoveBackground(image.path);
-  await saveCreation(
-    userId,
-    "Remove background from image",
-    secure_url,
-    "image"
-  );
-  return secure_url;
+  try {
+    const secure_url = await uploadImageRemoveBackground(image.path);
+    await saveCreation(
+      userId,
+      "Remove background from image",
+      secure_url,
+      "image",
+    );
+    return secure_url;
+  } finally {
+    if (image?.path) {
+      fs.promises.unlink(image.path).catch(() => {});
+    }
+  }
 };
 
 export const removeImageObjectService = async ({ userId, image, object }) => {
-  const secure_url = await uploadImageRemoveObject(image.path, object);
-  await saveCreation(
-    userId,
-    `Removed ${object} from image.`,
-    secure_url,
-    "image"
-  );
-  return secure_url;
+  try {
+    const secure_url = await uploadImageRemoveObject(image.path, object);
+    await saveCreation(
+      userId,
+      `Removed ${object} from image.`,
+      secure_url,
+      "image",
+    );
+    return secure_url;
+  } finally {
+    if (image?.path) {
+      fs.promises.unlink(image.path).catch(() => {});
+    }
+  }
 };
 
 export const reviewResumeService = async ({ userId, resume }) => {
-  const dataBuffer = fs.readFileSync(resume.path);
-  const pdfData = await pdf(dataBuffer);
+  try {
+    const dataBuffer = fs.readFileSync(resume.path);
+    const pdfData = await pdf(dataBuffer);
 
-  const prompt = `Review the following resume and provide constructive feedback on its strengths, weaknesses, and areas for improvement. Resume Content:\n\n${pdfData.text}`;
+    const prompt = `Review the following resume and provide constructive feedback on its strengths, weaknesses, and areas for improvement. Resume Content:\n\n${pdfData.text}`;
 
-  const response = await createGeminiChatCompletion({
-    prompt,
-    temperature: 0.7,
-    max_tokens: 1000,
-  });
+    const response = await createGeminiChatCompletion({
+      prompt,
+      temperature: 0.7,
+      max_tokens: 1000,
+    });
 
-  const content = response.choices?.[0]?.message?.content;
+    const content = response.choices?.[0]?.message?.content;
 
-  await saveCreation(
-    userId,
-    "Review the uploaded resume",
-    content,
-    "resume-review",
-    {
-      isResume: true,
+    await saveCreation(
+      userId,
+      "Review the uploaded resume",
+      content,
+      "resume-review",
+      {
+        isResume: true,
+      },
+    );
+    return content;
+  } finally {
+    if (resume?.path) {
+      fs.promises.unlink(resume.path).catch(() => {});
     }
-  );
-  return content;
+  }
 };

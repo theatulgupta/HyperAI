@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Edit, Sparkles, Loader2, Image } from "lucide-react";
 import { useWriteArticle } from "../hooks/useWriteArticle";
+import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 
 const WriteArticle = () => {
@@ -17,7 +18,11 @@ const WriteArticle = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    generateArticle({ prompt: input, length: selectedLength.length });
+    if (!input.trim()) {
+      toast.error("Please enter a topic.");
+      return;
+    }
+    generateArticle({ prompt: input.trim(), length: selectedLength.length });
     setSelectedLength(articleLength[0]);
   };
 

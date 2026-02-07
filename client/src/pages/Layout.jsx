@@ -1,5 +1,4 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { assets } from "../assets/assets";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Sidebar from "../components/Sidebar";
@@ -12,12 +11,14 @@ const Layout = () => {
   return user ? (
     <div className="flex flex-col items-start justify-start h-screen">
       <nav className="w-full px-8 min-h-14 flex items-center justify-between border-b border-gray-200">
-        <img
-          src={assets.logo}
-          alt="logo"
+        <button
+          type="button"
           onClick={() => navigate("/")}
-          className="cursor-pointer w-32 sm:w-44"
-        />
+          className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800"
+          aria-label="Hyper.ai home"
+        >
+          Hyper<span className="text-primary">.ai</span>
+        </button>
         {sidebar ? (
           <X
             onClick={() => setSidebar(false)}
